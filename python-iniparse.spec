@@ -1,6 +1,6 @@
 %define oname iniparse
 %define name python-%oname
-%define version 0.2.3
+%define version 0.2.4
 %define release %mkrel 1
 
 Summary: INI parser for python
