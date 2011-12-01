@@ -43,12 +43,12 @@ python setup.py build
 #perl -pi -e 's|^#!python|#!/usr/bin/python|' easy_install.py setuptools/command/easy_install.py
 
 %install
-rm -rf $RPM_BUILD_ROOT
-python setup.py install --prefix=$RPM_BUILD_ROOT/%_prefix 
-rm -Rf $RPM_BUILD_ROOT/%_prefix/share/doc/*
+rm -rf %{buildroot}
+python setup.py install --prefix=%{buildroot}/%_prefix 
+rm -Rf %{buildroot}/%_prefix/share/doc/*
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
