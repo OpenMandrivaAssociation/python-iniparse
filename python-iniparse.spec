@@ -43,14 +43,46 @@ python setup.py build
 #perl -pi -e 's|^#!python|#!/usr/bin/python|' easy_install.py setuptools/command/easy_install.py
 
 %install
-rm -rf %{buildroot}
-python setup.py install --prefix=%{buildroot}/%_prefix 
-rm -Rf %{buildroot}/%_prefix/share/doc/*
+rm -rf $RPM_BUILD_ROOT
+python setup.py install --prefix=$RPM_BUILD_ROOT/%_prefix 
+rm -Rf $RPM_BUILD_ROOT/%_prefix/share/doc/*
 
 %clean
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
 %doc Changelog LICENSE LICENSE-PSF README html/* 
 %py_sitedir/%{oname}*
+
+
+%changelog
+* Thu May 05 2011 Oden Eriksson <oeriksson@mandriva.com> 0.4-3mdv2011.0
++ Revision: 667939
+- mass rebuild
+
+* Sun Nov 21 2010 Funda Wang <fwang@mandriva.org> 0.4-2mdv2011.0
++ Revision: 599400
+- rebuild for py 2.7
+
+* Sat Aug 14 2010 Guillaume Rousse <guillomovitch@mandriva.org> 0.4-1mdv2011.0
++ Revision: 569669
+- update to new version 0.4
+
+* Sun Apr 25 2010 Guillaume Rousse <guillomovitch@mandriva.org> 0.3.2-1mdv2010.1
++ Revision: 538756
+- update to new version 0.3.2
+
+* Tue Jun 09 2009 Guillaume Rousse <guillomovitch@mandriva.org> 0.3.1-1mdv2010.0
++ Revision: 384251
+- update to new version 0.3.1
+
+* Sun Dec 28 2008 Guillaume Rousse <guillomovitch@mandriva.org> 0.2.4-1mdv2009.1
++ Revision: 320596
+- update to new version 0.2.4
+
+* Sat Aug 16 2008 Michael Scherer <misc@mandriva.org> 0.2.3-1mdv2009.0
++ Revision: 272497
+- import python-iniparse
+
+
