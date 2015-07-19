@@ -3,7 +3,7 @@
 Summary:	INI parser for python
 Name:		python-%{oname}
 Version:	0.4
-Release:	10
+Release:	11
 License:	MIT
 Group:		Development/Python
 Url:		http://code.google.com/p/iniparse/
