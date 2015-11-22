@@ -3,13 +3,16 @@
 Summary:	INI parser for python
 Name:		python-%{oname}
 Version:	0.4
-Release:	11
+Release:	12
 License:	MIT
 Group:		Development/Python
 Url:		http://code.google.com/p/iniparse/
 Source0:	http://iniparse.googlecode.com/files/%{oname}-%{version}.tar.gz 
+Patch1:		python-iniparse-python3-compat.patch
+Patch2:		fix-issue-28.patch
 BuildArch:	noarch
 BuildRequires:	pkgconfig(python)
+Requires:	python-six
 
 %description
 iniparse is a INI parser for Python which is:
@@ -33,6 +36,9 @@ desirable in applications like image galleries.
 
 %prep
 %setup -qn %{oname}-%{version}
+%patch1 -p0
+%patch2 -p1
+%patch3 -p1
 
 %build
 python setup.py build
