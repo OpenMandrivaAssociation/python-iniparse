@@ -6,10 +6,10 @@
 Summary:	INI parser for Python
 Name:		python-%{oname}
 Version:	0.4
-Release:	14
+Release:	15
 License:	MIT
 Group:		Development/Python
-Url:		http://code.google.com/p/iniparse/
+Url:		https://pypi.python.org/pypi/iniparse/?
 Source0:	http://iniparse.googlecode.com/files/%{oname}-%{version}.tar.gz 
 Patch1:		python-iniparse-python3-compat.patch
 Patch2:		fix-issue-28.patch
