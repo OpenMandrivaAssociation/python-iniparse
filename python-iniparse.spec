@@ -6,7 +6,7 @@
 Summary:	INI parser for Python
 Name:		python-%{oname}
 Version:	0.4
-Release:	16
+Release:	17
 License:	MIT
 Group:		Development/Python
 Url:		https://pypi.python.org/pypi/iniparse/?
