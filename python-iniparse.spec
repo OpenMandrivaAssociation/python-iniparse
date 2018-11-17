@@ -70,7 +70,6 @@ desirable in applications like image galleries.
 %setup -qn %{oname}-%{version}
 %patch1 -p0
 %patch2 -p1
-%patch3 -p1
 
 %if %{with python2}
 mkdir ../%{oname}-%{version}-py2
