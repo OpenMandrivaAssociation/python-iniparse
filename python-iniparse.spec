@@ -1,107 +1,73 @@
-%define oname iniparse
+%define module iniparse
+%bcond tests 1
 
-# Enable legacy Python 2 build
-%bcond_without python2
-
+Name:		python-iniparse
 Summary:	INI parser for Python
-Name:		python-%{oname}
-Version:	0.4
-Release:	20
+Version:	0.5.1
+Release:	1
 License:	MIT
 Group:		Development/Python
-Url:		https://pypi.python.org/pypi/iniparse/?
-Source0:	http://iniparse.googlecode.com/files/%{oname}-%{version}.tar.gz 
-Patch1:		python-iniparse-python3-compat.patch
-Patch2:		fix-issue-28.patch
+URL:		https://github.com/candlepin/python-iniparse
+Source0:	%{URL}/archive/%{version}/%{name}-%{version}.tar.gz
+# NOTE	These patches are all merged upstream post-release of v0.5.1, we should be able to remove them for the next release > 0.5.1
+# https://github.com/candlepin/python-iniparse/commit/ad3760fd2b8d4a1ed7c83134e4018968b0aa83bb
+Patch0:	https://github.com/candlepin/python-iniparse/commit/ad3760fd2b8d4a1ed7c83134e4018968b0aa83bb.patch#/0.5.1-fix-release-versioning.patch
+# This fixes building with py3.14
+# https://github.com/candlepin/python-iniparse/pull/38/
+Patch1:	https://github.com/candlepin/python-iniparse/commit/3267e724a2d5ce0dbd388f62d549d870b76cb0f4.patch#/0.5.1-avoid-the-multiprocessing-forkserver-method.patch
+# https://github.com/candlepin/python-iniparse/commit/c5e2a69f0415238d9df2815e0c9f0f72f8467cd9
+Patch2:	https://github.com/candlepin/python-iniparse/commit/c5e2a69f0415238d9df2815e0c9f0f72f8467cd9.patch#/0.5.1-fix-a-small-test-error.patch
+# https://github.com/candlepin/python-iniparse/commit/d750fe18d3effea95f2f0b60e03b4a8a659b7ea1
+Patch3:	https://github.com/candlepin/python-iniparse/commit/d750fe18d3effea95f2f0b60e03b4a8a659b7ea1.patch#/0.5.1-fix-test-warning-message.patch
+
+BuildSystem:	python
 BuildArch:	noarch
 BuildRequires:	pkgconfig(python3)
-BuildRequires:	python-setuptools
-Requires:	python-six
-Provides:	python3-%{oname} = %{EVRD}
+BuildRequires:	python%{pyver}dist(pip)
+BuildRequires:	python%{pyver}dist(setuptools)
+BuildRequires:	python%{pyver}dist(wheel)
+%if %{with tests}
+BuildRequires:	python-test
+%endif
+%rename python2-iniparse
 
 %description
-iniparse is a INI parser for Python which is:
+%{name} is a INI parser for Python which is:
 
- * Compatiable with ConfigParser:	Backward compatible implementations of 
-   ConfigParser, RawConfigParser, and SafeConfigParser are included that 
-   are API-compatible with the Python standard library. They pass all the 
-   unit tests in Python-2.4.4.
- * Preserves structure of INI files:	Order of sections & options, indentation, 
-   comments, and blank lines are preserved as far as possible when data is 
-   updated.
- * More convenient:	Values can be accessed using dotted notation 
-   (cfg.user.name), or using container syntax (cfg['user']['name']).
+Compatible with ConfigParser: Backward compatible implementations of
+ConfigParser, RawConfigParser, and SafeConfigParser are included that
+are API-compatible with the Python standard library.
 
-It is very useful for config files that are updated both by users and by 
-programs, since it is very disorienting for a user to have her config 
-file completely rearranged whenever a program changes it. iniparse also 
-allows making the order of entries in a config file significant, which is 
-desirable in applications like image galleries.
+Preserves structure of INI files: Order of sections & options, indentation,
+comments, and blank lines are preserved as far as possible when data is updated.
 
+More convenient: Values can be accessed using dotted notation (cfg.user.name),
+or using container syntax (cfg['user']['name']).
 
-%if %{with python2}
-%package -n python2-%{oname}
-Summary:	INI parser for Python 2 (legacy)
-BuildRequires:	pkgconfig(python2)
-BuildRequires:	python2-setuptools
-Requires:	python2-six
+It is very useful for config files that are updated both by users and by
+programs, since it is very disorienting for a user to have her config file
+completely rearranged whenever a program changes it. iniparse also allows
+making the order of entries in a config file significant, which is desirable
+in applications like image galleries.
 
-%description -n python2-%{oname}
-iniparse is a INI parser for Python which is:
+%prep -a
+# Remove executable bit from html file
+chmod 644 html/index.html
 
- * Compatiable with ConfigParser:	Backward compatible implementations of 
-   ConfigParser, RawConfigParser, and SafeConfigParser are included that 
-   are API-compatible with the Python standard library. They pass all the 
-   unit tests in Python-2.4.4.
- * Preserves structure of INI files:	Order of sections & options, indentation, 
-   comments, and blank lines are preserved as far as possible when data is 
-   updated.
- * More convenient:	Values can be accessed using dotted notation 
-   (cfg.user.name), or using container syntax (cfg['user']['name']).
+%install -a
+# Remove unwanted files, we package these ourselves where we want them.
+rm -rf %{buildroot}%{_docdir}/%{module}-%{version}
 
-It is very useful for config files that are updated both by users and by 
-programs, since it is very disorienting for a user to have her config 
-file completely rearranged whenever a program changes it. iniparse also 
-allows making the order of entries in a config file significant, which is 
-desirable in applications like image galleries.
+%if %{with tests}
+%check
+export CI=true
+export PYTHONPATH="%{buildroot}%{python_sitelib}:${PWD}"
+%{__python3} runtests.py
 %endif
-
-%prep
-%setup -qn %{oname}-%{version}
-%patch1 -p0
-%patch2 -p1
-
-%if %{with python2}
-mkdir ../%{oname}-%{version}-py2
-cp -a . ../%{oname}-%{version}-py2
-%endif
-
-%build
-python3 setup.py build
-
-%if %{with python2}
-pushd ../%{oname}-%{version}-py2
-python2 setup.py build
-popd
-%endif
-
-%install
-python3 setup.py install --prefix=%{buildroot}%{_prefix}
-
-%if %{with python2}
-pushd ../%{oname}-%{version}-py2
-python2 setup.py install --prefix=%{buildroot}%{_prefix}
-popd
-%endif
-
-rm -Rf %{buildroot}%{_prefix}/share/doc/*
 
 %files
-%doc Changelog LICENSE LICENSE-PSF README html/* 
-%{python3_sitelib}/%{oname}*
+%doc Changelog README.md html/*
+%license LICENSE LICENSE-PSF
+%{python_sitelib}/%{module}
+%{python_sitelib}/%{module}-%{version}*.*-info
 
-%if %{with python2}
-%files -n python2-%{oname}
-%doc Changelog LICENSE LICENSE-PSF README html/* 
-%{python2_sitelib}/%{oname}*
-%endif

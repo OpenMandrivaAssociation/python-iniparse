@@ -1,0 +1,22 @@
+From c5e2a69f0415238d9df2815e0c9f0f72f8467cd9 Mon Sep 17 00:00:00 2001
+From: zpetrace <zpetrace@redhat.com>
+Date: Mon, 6 Oct 2025 14:59:07 +0200
+Subject: [PATCH] Fixed a small test error
+
+---
+ tests/test_fuzz.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/test_fuzz.py b/tests/test_fuzz.py
+index 305a348..b0271f3 100644
+--- a/tests/test_fuzz.py
++++ b/tests/test_fuzz.py
+@@ -66,7 +66,7 @@ def random_ini_file():
+         elif x < 0.7:
+             # option
+             name = random_string()
+-            name = re.sub(':|=| |\[', '', name)
++            name = re.sub(r':|=| |\[', '', name)
+             sep = random.choice([':', '='])
+             l = name + random_space() + sep + random_space() + random_string()
+             if random.randint(0,1):

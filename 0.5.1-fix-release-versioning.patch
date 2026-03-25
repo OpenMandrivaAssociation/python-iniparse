@@ -1,0 +1,86 @@
+From ad3760fd2b8d4a1ed7c83134e4018968b0aa83bb Mon Sep 17 00:00:00 2001
+From: Jiri Hnidek <jhnidek@redhat.com>
+Date: Thu, 12 Dec 2024 15:57:37 +0100
+Subject: [PATCH] fix: Update all files for next release 0.5.1
+
+* Previous release 0.5.1 did not contain correct version
+* Be prepared for next release 0.5.2
+---
+ Changelog            |  6 ++++++
+ PKG-INFO             | 16 ++++++++++------
+ python-iniparse.spec |  2 +-
+ setup.py             |  2 +-
+ 4 files changed, 18 insertions(+), 8 deletions(-)
+
+diff --git a/Changelog b/Changelog
+index 0bb1522..909aa36 100644
+--- a/Changelog
++++ b/Changelog
+@@ -1,3 +1,9 @@
++2024-12-11
++* released 0.5.1
++
++2021-05-18
++* released 0.5
++
+ 2010-06-12
+ * released 0.4
+ 
+diff --git a/PKG-INFO b/PKG-INFO
+index bebcb80..92f5f21 100644
+--- a/PKG-INFO
++++ b/PKG-INFO
+@@ -1,6 +1,6 @@
+ Metadata-Version: 1.0
+ Name: iniparse
+-Version: 0.4
++Version: 0.5.1
+ Summary: Accessing and Modifying INI files
+ Home-page: http://code.google.com/p/iniparse/
+ Author: Paramjit Oberoi
+@@ -18,10 +18,14 @@ Classifier: License :: OSI Approved :: MIT License
+ Classifier: License :: OSI Approved :: Python Software Foundation License
+ Classifier: Operating System :: OS Independent
+ Classifier: Programming Language :: Python
+-Classifier: Programming Language :: Python :: 2
+-Classifier: Programming Language :: Python :: 2.6
+-Classifier: Programming Language :: Python :: 2.7
+ Classifier: Programming Language :: Python :: 3
+-Classifier: Programming Language :: Python :: 3.3
+-Classifier: Programming Language :: Python :: 3.4
++Classifier: Programming Language :: Python :: 3.5
++Classifier: Programming Language :: Python :: 3.6
++Classifier: Programming Language :: Python :: 3.7
++Classifier: Programming Language :: Python :: 3.8
++Classifier: Programming Language :: Python :: 3.9
++Classifier: Programming Language :: Python :: 3.10
++Classifier: Programming Language :: Python :: 3.11
++Classifier: Programming Language :: Python :: 3.12
++Classifier: Programming Language :: Python :: 3.13
+ Classifier: Topic :: Software Development :: Libraries :: Python Modules
+diff --git a/python-iniparse.spec b/python-iniparse.spec
+index a139570..6e8a253 100644
+--- a/python-iniparse.spec
++++ b/python-iniparse.spec
+@@ -4,7 +4,7 @@
+ %global _docdir_fmt %{name}
+ 
+ Name:           python-%{modname}
+-Version:        0.5
++Version:        0.5.1
+ Release:        1%{?dist}
+ Summary:        Python Module for Accessing and Modifying Configuration Data in INI files
+ License:        MIT and Python
+diff --git a/setup.py b/setup.py
+index a91d9c0..976caf9 100644
+--- a/setup.py
++++ b/setup.py
+@@ -2,7 +2,7 @@
+ 
+ from setuptools import setup
+ 
+-VERSION = "0.5"
++VERSION = "0.5.1"
+ 
+ setup(
+     name="iniparse",

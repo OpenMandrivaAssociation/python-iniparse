@@ -1,0 +1,23 @@
+From d750fe18d3effea95f2f0b60e03b4a8a659b7ea1 Mon Sep 17 00:00:00 2001
+From: zpetrace <zpetrace@redhat.com>
+Date: Tue, 3 Jun 2025 12:34:05 +0200
+Subject: [PATCH] fix(test): Removing the warning message
+
+Small change of removing the warning message.
+---
+ tests/test_ini.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/test_ini.py b/tests/test_ini.py
+index 97aef41..359a2b9 100644
+--- a/tests/test_ini.py
++++ b/tests/test_ini.py
+@@ -51,7 +51,7 @@ def test_invalid(self):
+ 
+     lines = [
+         ('[section]',          ('section', None, None, -1)),
+-        ('[se\ct%[ion\t]',     ('se\ct%[ion\t', None, None, -1)),
++        (r'[se\ct%[ion\t]',     (r'se\ct%[ion\t', None, None, -1)),
+         ('[sec tion]  ; hi',   ('sec tion', ' hi', ';', 12)),
+         ('[section]  #oops!',  ('section', 'oops!', '#', 11)),
+         ('[section]   ;  ',    ('section', '', ';', 12)),
