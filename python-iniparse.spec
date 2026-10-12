@@ -4,7 +4,7 @@
 Name:		python-iniparse
 Summary:	INI parser for Python
 Version:	0.5.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Python
 URL:		https://github.com/candlepin/python-iniparse
